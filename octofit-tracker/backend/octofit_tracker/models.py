@@ -5,6 +5,20 @@ from django.contrib.auth.models import AbstractUser
 # User model for authentication and profiles
 class User(AbstractUser):
     email = models.EmailField(unique=True)
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='octofit_user_set',
+        blank=True,
+        help_text='The groups this user belongs to.',
+        verbose_name='groups',
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='octofit_user_permissions_set',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        verbose_name='user permissions',
+    )
     # Add additional fields as needed
     def __str__(self):
         return self.username
